@@ -26,7 +26,7 @@ export default function Home({ user }) {
       {user === null && (
         <button onClick={async () => await login(router)}>Google Login</button>
       )}
-      {user !== null && <a href="/app/dashboard">Open App →</a>}
+      {user !== null && <a href="/orders">Open App →</a>}
     </div>
   );
 }
