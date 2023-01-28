@@ -53,7 +53,7 @@ function Header({ currentItem }) {
             />
           ) : (
             <>
-              <a
+              <Link
                 href="/orders"
                 className="Header__actions--button dark"
                 data-icon={String.fromCharCode(59505)}
