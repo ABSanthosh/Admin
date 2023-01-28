@@ -12,7 +12,7 @@ function Header({ currentItem }) {
   return (
     <div className="HeaderWrapper">
       <div className="Header">
-        <Logo />
+        <Logo isBlack isSmall={false} />
         <ul className="Header__menu">
           <li
             className={`Header__menu--${
@@ -53,13 +53,13 @@ function Header({ currentItem }) {
             />
           ) : (
             <>
-              <Link href="/app/dashboard">
-                <a
-                  className="Header__actions--button dark"
-                  data-icon={String.fromCharCode(59505)}
-                  title="Cart"
-                />
-              </Link>
+              <a
+                href="/orders"
+                className="Header__actions--button dark"
+                data-icon={String.fromCharCode(59505)}
+                title="Cart"
+              />
+
               <button
                 className="Header__actions--button dark"
                 data-icon={String.fromCharCode(59834)}

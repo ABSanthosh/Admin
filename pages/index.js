@@ -2,6 +2,9 @@ import "../styles/routes/Home.scss";
 import { useRouter } from "next/router";
 
 import useAuth from "../hooks/useAuth";
+import Fetcher from "../utils/Fetcher";
+import FancyButton from "../components/FancyButton/FancyButton";
+import Header from "../components/Header/Header";
 
 export async function getServerSideProps(context) {
   if (context.req.session.user === undefined) {
@@ -23,10 +26,31 @@ export default function Home({ user }) {
 
   return (
     <div className="HomeWrapper">
-      {user === null && (
-        <button onClick={async () => await login(router)}>Google Login</button>
-      )}
-      {user !== null && <a href="/orders">Open App →</a>}
+      <Header currentItem={"Home"} />
+      <section className="HeroSection">
+        <div className="HeroSection__left">
+          <div className="HeroSection__top">
+            <h1 className="HeroSection__top--title">
+              <p>
+                Grow you business,
+                <span>we will take care</span> of all your your logistics
+              </p>
+            </h1>
+            <div className="HeroSection__bottom">
+              <FancyButton
+                isLink={true}
+                href="/orders"
+                style={{ width: "180px" }}
+              >
+                Get Started
+              </FancyButton>
+            </div>
+          </div>
+        </div>
+        <div className="HeroSection__right">
+          <img className="HeroSection__right--heroImage" src="/Img/hero.svg" />
+        </div>
+      </section>
     </div>
   );
 }
