@@ -1,0 +1,5 @@
+.HomeWrapper {
+  @include box();
+  @include make-flex($just: flex-start);
+  
+}
