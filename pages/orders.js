@@ -333,13 +333,13 @@ export default function Orders({ user, orders }) {
                   disabled={true}
                 />
               </div>
-              <div className="OrderPane__row">
+              {/* <div className="OrderPane__row">
                 <label htmlFor="fromCountry">Final Price</label>
                 <FancyInput
                   value={orderData?.finalPrice}
                   onChange={(e) => setUpdatedPrice(e)}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="OrderPane__bottom">
