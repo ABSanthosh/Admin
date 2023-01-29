@@ -5,6 +5,8 @@ import "../styles/routes/orders.scss";
 import FancyButton from "../components/FancyButton/FancyButton";
 import Fetcher from "../utils/Fetcher";
 import Select from "react-select";
+import { Cashify } from "../utils/Cashify";
+import FancyInput from "../components/FancyInput/FancyInput";
 export async function getServerSideProps(context) {
   if (context.req.session.user === undefined) {
     return {
@@ -28,8 +30,9 @@ export default function Orders({ user, orders }) {
   const [orderData, setOrderData] = useState(null);
 
   const [updatedStatus, setUpdatedStatus] = useState(null);
+  const [updatedPrice, setUpdatedPrice] = useState(null);
+  console.log(orders);
 
-  console.log(updatedStatus === null);
   return (
     <div className="OrdersPage">
       <section className="OrdersPage__col">
@@ -53,7 +56,11 @@ export default function Orders({ user, orders }) {
                     <span>{order.toBusiness}</span>
                   </div>
                   <div className="OrdersPage__OrderCard--row">
-                    <g>~$4000</g>
+                    <g>
+                      {order.predictedPrice
+                        ? Cashify(order.predictedPrice)
+                        : "--"}
+                    </g>
                     <FancyButton
                       onClick={async () => {
                         setEditOrderPane(order.id);
@@ -99,7 +106,11 @@ export default function Orders({ user, orders }) {
                     <span>{order.toBusiness}</span>
                   </div>
                   <div className="OrdersPage__OrderCard--row">
-                    <g>~$4000</g>
+                    <g>
+                      {order.predictedPrice
+                        ? Cashify(order.predictedPrice)
+                        : "--"}
+                    </g>
                     <FancyButton
                       onClick={async () => {
                         setEditOrderPane(order.id);
@@ -145,7 +156,11 @@ export default function Orders({ user, orders }) {
                     <span>{order.toBusiness}</span>
                   </div>
                   <div className="OrdersPage__OrderCard--row">
-                    <g>~$4000</g>
+                    <g>
+                      {order.predictedPrice
+                        ? Cashify(order.predictedPrice)
+                        : "--"}
+                    </g>
                     <FancyButton
                       onClick={async () => {
                         setEditOrderPane(order.id);
@@ -191,7 +206,11 @@ export default function Orders({ user, orders }) {
                     <span>{order.toBusiness}</span>
                   </div>
                   <div className="OrdersPage__OrderCard--row">
-                    <g>~$4000</g>
+                    <g>
+                      {order.predictedPrice
+                        ? Cashify(order.predictedPrice)
+                        : "--"}
+                    </g>
                     <FancyButton
                       onClick={async () => {
                         setEditOrderPane(order.id);
@@ -287,7 +306,7 @@ export default function Orders({ user, orders }) {
                 </div>
                 <div className="OrderPane__row--box">
                   <span>Warehouse</span>
-                  <h2>{orderData?.fromWarehouse.name}</h2>
+                  <h2>{orderData?.toWarehouse.name}</h2>
                 </div>
               </div>
             </div>
@@ -302,10 +321,30 @@ export default function Orders({ user, orders }) {
                 value={orderData?.description}
               />
             </div>
+            <div className="OrderPane__column">
+              <div className="OrderPane__row">
+                <label htmlFor="fromCountry">Predicted Price</label>
+                <FancyInput
+                  value={
+                    orderData?.predictedPrice
+                      ? Cashify(orderData?.predictedPrice)
+                      : "--"
+                  }
+                  disabled={true}
+                />
+              </div>
+              <div className="OrderPane__row">
+                <label htmlFor="fromCountry">Final Price</label>
+                <FancyInput
+                  value={orderData?.finalPrice}
+                  onChange={(e) => setUpdatedPrice(e)}
+                />
+              </div>
+            </div>
           </div>
           <div className="OrderPane__bottom">
             <FancyButton
-              disabled={updatedStatus === null}
+              disabled={updatedStatus === null && updatedPrice === null}
               onClick={async () => {
                 await Fetcher("/api/orders/update-order-status", {
                   method: "POST",
